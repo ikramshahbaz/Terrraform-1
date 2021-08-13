@@ -48,6 +48,7 @@ resource "azurerm_key_vault_secret" "vm_password" {
 
 
 resource "azurerm_virtual_network" "main" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                = "network-metis"
   resource_group_name = var.rgname
   location            = var.location
@@ -55,6 +56,7 @@ resource "azurerm_virtual_network" "main" {
 }
 
 resource "azurerm_subnet" "internal" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                 = "testsubnet"
   resource_group_name  = var.rgname
   virtual_network_name = azurerm_virtual_network.main.name
@@ -62,6 +64,7 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_network_security_group" "security_group" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                = "acceptanceTestSecurityGroup1"
   location            = var.location
   resource_group_name = var.rgname
@@ -85,11 +88,13 @@ resource "azurerm_network_security_group" "security_group" {
 
 
 resource "azurerm_subnet_network_security_group_association" "security_group_associate" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   subnet_id                 = azurerm_subnet.internal.id
   network_security_group_id = azurerm_network_security_group.security_group.id
 }
 
 resource "azurerm_public_ip" "public_ip" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                = "acceptanceTestPublicIp1"
   resource_group_name = var.rgname
   location            = var.location
@@ -101,6 +106,7 @@ resource "azurerm_public_ip" "public_ip" {
 }
 
 resource "azurerm_network_interface" "main1" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                = "vm-01-nic"
   location            = var.location
   resource_group_name = var.rgname
@@ -116,6 +122,7 @@ resource "azurerm_network_interface" "main1" {
 
 
 resource "azurerm_virtual_machine" "main2" {
+  depends_on                  = [azurerm_resource_group.resourcegroup]
   name                             = "vm-01"
   location                         = var.location
   resource_group_name              = var.rgname
