@@ -6,7 +6,7 @@ resource "azurerm_resource_group" "resourcegroup" {
   name     = var.rgname
   location = var.location
   tags = {
-    name = "ikram"
+    name = "shahbaz"
   }
 
   provisioner "local-exec" {
