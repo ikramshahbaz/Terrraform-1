@@ -7,3 +7,4 @@ variable "location" {
   type    = string
   default = "east us"
 }
+#
